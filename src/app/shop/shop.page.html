@@ -1,0 +1,26 @@
+<app-header [title]="titlePage" [icon]="icon"></app-header>
+<ion-content [fullscreen]="true">
+
+  <ion-segment value="default" (ionchange)="onSegmentChange($event)">
+    <ion-segment-button value="default">
+      <ion-icon aria-hidden="true" name="storefront-outline"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="segment">
+      <ion-icon name="newspaper-outline"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="filters">
+    <ion-searchbar placeholder="Chercher"></ion-searchbar>
+    <ion-button size="small" fill="outline" (click)="openFilterModal()">
+      <ion-icon slot="start" name="filter-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  @if(selectedSegment == "default") {
+    <app-shop-list></app-shop-list>
+  } @else {
+    <app-actuality-list></app-actuality-list>
+  }
+
+</ion-content>

@@ -1,0 +1,55 @@
+<app-header [title]="titlePage" [icon]="icon"></app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="layout-container">
+    <div class="fidelity-card">
+      <ion-card class="custom-card">
+        <ion-card-header>
+          <ion-card-title>Cadddddrte N°{{store.cardNumber()}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <div>
+            <h2>{{store.globalPoints()}}</h2>
+            <p>Points accumulés</p>
+          </div>
+
+          <div>
+            <ion-img
+              src="data:image/png;base64,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"
+              alt="Barcode"></ion-img>
+          </div>
+
+          <ion-button expand="block" color="primary" style="border-radius: 5px; margin-top: 20px"
+            [routerLink]="['/tabs/card/details']">
+            Voir les détails
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <ion-grid class="custom-grid">
+      <ion-row>
+        <ion-col size="4">
+          <ion-button expand="block" class="custom-button" [routerLink]="['/tabs/card/offres']">
+            <ion-icon name="pricetags-outline"></ion-icon>
+            <p>Offres</p>
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button expand="block" class="custom-button" [routerLink]="['/tabs/card/historique']">
+            <ion-icon name="time-outline"></ion-icon>
+            <p>Historique</p>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+
+<ion-alert
+  trigger="present-alert"
+  header="ERREUR"
+  message="Une erreur est survenue lors de la récupération des données."
+  [buttons]="alertButtons"
+  [isOpen]="store.error()"
+></ion-alert>

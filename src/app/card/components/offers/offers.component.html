@@ -1,0 +1,26 @@
+<app-header [title]="titlePage" [icon]="icon"></app-header>
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="pricetags-outline"></ion-icon>
+      <p>Les offres</p>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-searchbar placeholder="Chercher"></ion-searchbar>
+      <ion-list lines="full">
+        @for(span of spans; track $index) {
+        <ion-item>
+          <ion-label class="color-text">
+            <div>
+              <p>{{span.name}}</p>
+              <ion-badge color="light">{{span.proximity}}</ion-badge>
+            </div>
+            <p class="offer">{{span.offer}}</p>
+          </ion-label>
+        </ion-item>
+        }
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,75 @@
+<div class="modal-card-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Filtrer</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="dismissModal()">Fermer</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      @for(filter of filterConfig; track $index) {
+      <ng-container>
+        <!-- Select -->
+        @if(filter.type === 'select') {
+        <ion-item (click)="openSelect(selectElement)" class="select-item">
+          <ion-label>{{ filter.label }}</ion-label>
+          <ion-select
+            #selectElement
+            [(ngModel)]="filters[filter.key]"
+            [placeholder]="filter.placeholder"
+          >
+            @for(option of filter.options; track $index) {
+            <ion-select-option [value]="option.value">
+              {{ option.label }}
+            </ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
+        }
+        <!-- Range -->
+        @if(filter.type === 'range') {
+        <ion-item>
+          <div class="range-container">
+            <ion-label>{{ filter.label }}</ion-label>
+            <ion-input
+              type="number"
+              placeholder="Minimum"
+              [(ngModel)]="filters[filter.key + 'Min']"
+              [step]="filter.step || 1"
+              (ionInput)="updateRangeValue($event, 'min')"
+            ></ion-input>
+
+            <ion-input
+              type="number"
+              placeholder="Maximum"
+              [(ngModel)]="filters[filter.key + 'Max']"
+              [step]="filter.step || 1"
+              (ionInput)="updateRangeValue($event, 'max')"
+            ></ion-input>
+            <p>
+              Valeur actuelle : entre
+              {{ currentRangeMin || filter.defaultValues?.[0] }} et
+              {{ currentRangeMax || filter.defaultValues?.[1] }}
+              {{ filter.unit }}
+            </p>
+          </div>
+        </ion-item>
+        }
+        <!-- Toggle -->
+        @if(filter.type === 'toggle') {
+        <ion-item>
+          <ion-label>{{ filter.label }}</ion-label>
+          <ion-toggle [(ngModel)]="filters[filter.key]"></ion-toggle>
+        </ion-item>
+        }
+      </ng-container>
+      }
+      <ion-button class="footer-button" expand="block" (click)="applyFilters()"
+        >Appliquer</ion-button
+      >
+    </ion-list>
+  </ion-content>
+</div>

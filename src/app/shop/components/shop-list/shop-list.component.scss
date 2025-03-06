@@ -1,0 +1,22 @@
+ion-card {
+    ion-card-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        div {
+            flex: 1;
+            margin-right: 10px; 
+            p  {
+                color: var(--ion-color-secondary);
+                font-weight: bold;
+            }
+        }
+
+        ion-img {
+            width: 24%; // ou une taille adaptative si nécessaire
+            aspect-ratio: 1; // force l'image à être carrée
+            object-fit: cover; // recadre l'image pour occuper tout le carré
+        }
+    }
+}

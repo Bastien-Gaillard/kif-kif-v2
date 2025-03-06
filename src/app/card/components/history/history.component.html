@@ -1,0 +1,47 @@
+<app-header [title]="titlePage" [icon]="icon"></app-header>
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="time-outline"></ion-icon>
+      <p>Historique</p>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div>
+        <ion-searchbar
+          [debounce]="500"
+          (ionInput)="handleInput($event)"
+          placeholder="Chercher un magasin"
+        ></ion-searchbar>
+        <ion-button size="small" fill="outline" (click)="openFilterModal()">
+          <ion-icon slot="start" name="filter-outline"></ion-icon>
+        </ion-button>
+      </div>
+      <ion-list lines="full">
+        @for(history of store.historyPoints(); track $index) {
+        <ion-item>
+          <ion-label class="color-text">
+            <p>{{ formatDateToFrench(history.createdAt) }}</p>
+            <div>
+              <div class="shop">
+                <p>{{ history.shops.name }}</p>
+                <ion-card-subtitle>{{
+                  concatCategories(history.shops.shopsHasCategories)
+                }}</ion-card-subtitle>
+              </div>
+
+              <p>
+                @if(!history.positive) {
+                <span class="negative">{{ history.points }}</span
+                >} @else {
+                <span>{{ history.points }}</span>
+                } pts
+              </p>
+            </div>
+          </ion-label>
+        </ion-item>
+        }
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

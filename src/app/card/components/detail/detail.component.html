@@ -1,0 +1,42 @@
+<app-header [title]="titlePage" [icon]="icon"></app-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="global-card">
+    <ion-card-header>
+      <ion-icon name="card-outline"></ion-icon>
+      <p>Points globaux</p>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>
+        <span>{{ store.globalPoints() }}</span> points
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="storefront-outline"></ion-icon>
+      <p>Points par magasin</p>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-searchbar [debounce]="500" (ionInput)="handleInput($event)" placeholder="Chercher un magasin"></ion-searchbar>
+      <ion-list lines="full">
+        @for(points of this.store.currentPoints(); track $index) {
+        <ion-item>
+          <ion-label class="color-text">
+            <div>
+              <p>{{ points.shopName }}</p>
+              <ion-card-subtitle>{{concatCategories(points.categories)}}</ion-card-subtitle>
+            </div>
+            <p>
+              <span>{{ points.points }}</span> pts
+            </p></ion-label
+          >
+        </ion-item>
+        }
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

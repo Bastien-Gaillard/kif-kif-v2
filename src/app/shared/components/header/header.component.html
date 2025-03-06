@@ -1,0 +1,10 @@
+<ion-header>
+  @if(icon != null) {
+  <ion-button (click)="goBack()" shape="round" fill="clear" class="custom-button">
+    <ion-icon slot="icon-only" name="{{icon}}"></ion-icon>
+  </ion-button>
+  }
+
+  <ion-title>{{title}}</ion-title>
+
+</ion-header>

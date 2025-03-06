@@ -1,0 +1,7 @@
+{
+  "name": "kifkif",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
