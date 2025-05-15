@@ -8,6 +8,9 @@ import { GetPointsResolver } from './resolvers/getPoints.resolver';
 import { GetHistoryPointsResolver } from './resolvers/getHistoryPoints.resolver';
 import { GetCardNumberResolver } from './resolvers/getCardNumber.resolver';
 import { GetCurrentPointsResolver } from './resolvers/getCurrentPoints.resolver';
+import { GetOffersResolver } from './resolvers/getOffers.resolver';
+import { GetShopNearUserResolver } from '../wallet/resolvers/getShopNearUser.resolver';
+import { ShopListComponent } from '../shop/components/shop-list/shop-list.component';
 
 const routes: Routes = [
   {
@@ -15,7 +18,8 @@ const routes: Routes = [
     component: CardPage,
     resolve: {
       globalPoints: GetPointsResolver,
-      cardNumber: GetCardNumberResolver
+      cardNumber: GetCardNumberResolver,
+      shopNearMe: GetShopNearUserResolver
     },
   },
   {
@@ -35,7 +39,10 @@ const routes: Routes = [
   },
   {
     path: 'offres',
-    component: OffersComponent
+    component: OffersComponent,
+    resolve: {
+      offers: GetOffersResolver
+    }
   }
 ];
 

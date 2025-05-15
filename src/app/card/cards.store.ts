@@ -2,8 +2,14 @@ import { inject } from '@angular/core';
 import { signalStore, withState, withMethods, patchState } from '@ngrx/signals';
 import { QueryService } from './services/query.service';
 import { Points } from './models/points.model';
+import { GeolocationService } from '../services/geolocation.service';
+import { Offers } from './models/offers.model';
 type ActionState = {
-  loading: boolean;
+  loadingGlobalPoints: boolean,
+  loadingHistoryPoints: boolean,
+  loadingCardNumber: boolean,
+  loadingCurrentPoints: boolean,
+  loadingOffers: boolean;
   error: boolean;
   globalPoints: Points.GetGlobalPointsData | null;
   historyPoints: Points.GetHistoryPoints[] | null;
@@ -12,10 +18,15 @@ type ActionState = {
   currentPoints: Points.GetCurrentPoints[] | null;
   tempCurrentPoints: Points.GetCurrentPoints[] | null;
   filterConfigForHistory: any;
+  offers: Offers.GetOffersData[] | null;
 };
 
 export const initialActionState: ActionState = {
-  loading: false,
+  loadingGlobalPoints: false,
+  loadingHistoryPoints: false,
+  loadingCardNumber: false,
+  loadingCurrentPoints: false,
+  loadingOffers: false,
   error: false,
   globalPoints: null,
   historyPoints: null,
@@ -24,20 +35,24 @@ export const initialActionState: ActionState = {
   tempCurrentPoints: null,
   tempHistoryPoints: null,
   filterConfigForHistory: null,
+  offers: null,
 };
 
 export const cardStore = signalStore(
   { providedIn: 'root' },
   withState(initialActionState),
-  withMethods((store: any, queryService = inject(QueryService)) => ({
+  withMethods((store: any, queryService = inject(QueryService), geolocationService = inject(GeolocationService)) => ({
     getGlobalPoints: () => {
-      patchState(store, { loading: true });
+      patchState(store, { loadingGlobalPoints: true });
       queryService.getGlobalPoints(12).subscribe({
         next: (response) => {
           if (response.data) {
             patchState(store, { globalPoints: response.data });
+            patchState(store, { loadingGlobalPoints: false });
+
           } else {
             throw new Error('Erreur lors de la récupération des actions');
+
           }
         },
         error: (error) => {
@@ -97,12 +112,15 @@ export const cardStore = signalStore(
     },
 
     getCurrentPoints: () => {
-      patchState(store, { loading: true });
+      patchState(store, { loadingCurrentPoints: true });
       queryService.getCurrentPoints(12).subscribe({
         next: (response) => {
           if (response.data) {
+
             patchState(store, { currentPoints: response.data });
             patchState(store, { tempCurrentPoints: response.data });
+            patchState(store, { loadingCurrentPoints: false });
+
           } else {
             throw new Error('Erreur lors de la récupération des actions');
           }
@@ -127,6 +145,28 @@ export const cardStore = signalStore(
         error: (error) => {
           console.error('Erreur lors de la récupération des actions', error);
           patchState(store, { error: true });
+        },
+      });
+    },
+
+    getOffers: async (distance?: number) => {
+      patchState(store, { loadingOffers: true });
+      queryService.getOffers(distance || 500, await geolocationService.getCurrentPosition()).subscribe({
+        next: (response) => {
+          if (response.data) {
+            console.log("response.data", response.data);
+            patchState(store, { offers: response.data });
+            patchState(store, { loadingOffers: false });
+            console.log(response.data);
+          } else {
+            throw new Error('Erreur lors de la récupération des actions');
+          }
+        },
+        error: (error) => {
+          console.error('Erreur lors de la récupération des actions', error);
+          patchState(store, { error: true });
+          patchState(store, { loadingOffers: false });
+
         },
       });
     },
@@ -173,6 +213,8 @@ export const cardStore = signalStore(
 
       patchState(store, { historyPoints: filteredPoints });
     },
+
+
   }))
 );
 

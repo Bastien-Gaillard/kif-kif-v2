@@ -1,5 +1,6 @@
 export namespace Shops {
   export interface GetShop {
+    idShop: number;
     name: string;
     city: string;
     zipCode: string;
@@ -9,5 +10,6 @@ export namespace Shops {
         name: string;
       };
     };
+    images: string[];
   }
 }

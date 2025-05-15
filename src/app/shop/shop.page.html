@@ -15,10 +15,11 @@
     <ion-button size="small" fill="outline" (click)="openFilterModal()">
       <ion-icon slot="start" name="filter-outline"></ion-icon>
     </ion-button>
+
   </div>
 
-  @if(selectedSegment == "default") {
-    <app-shop-list></app-shop-list>
+  @if(selectedSegment == "default" && store.loading() == false) {
+    <app-shop-list [shops]="store.shops()"></app-shop-list>
   } @else {
     <app-actuality-list></app-actuality-list>
   }

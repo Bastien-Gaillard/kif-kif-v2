@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { GetShopNearUserResolver } from '../wallet/resolvers/getShopNearUser.resolver';
 
 const routes: Routes = [
   {
@@ -9,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: 'card',
-        loadChildren: () => import('../card/card.module').then(m => m.CardPageModule)
+        loadChildren: () => import('../card/card.module').then(m => m.CardPageModule),
       },
       {
         path: 'shop',

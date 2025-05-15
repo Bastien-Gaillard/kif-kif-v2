@@ -8,18 +8,51 @@
 
     <ion-card-content>
       <ion-searchbar placeholder="Chercher"></ion-searchbar>
+      <ion-item>
+        <ion-label>Distance (km)</ion-label>
+        <ion-range min="0" max="50" step="1" value="1" pin="true" (ionChange)="handleDistanceChange($event)">
+          <ion-label slot="start">0</ion-label>
+          <ion-label slot="end">50</ion-label>
+        </ion-range>
+      </ion-item>
       <ion-list lines="full">
-        @for(span of spans; track $index) {
+        @if(store.loadingOffers()) { @for(number of numbers; track $index) {
         <ion-item>
           <ion-label class="color-text">
             <div>
-              <p>{{span.name}}</p>
-              <ion-badge color="light">{{span.proximity}}</ion-badge>
+              <ion-skeleton-text
+                [animated]="true"
+                style="width: 80px"
+              ></ion-skeleton-text>
+              <ion-skeleton-text
+                [animated]="true"
+                style="width: 80px"
+              ></ion-skeleton-text>
             </div>
-            <p class="offer">{{span.offer}}</p>
+            <ion-skeleton-text
+              [animated]="true"
+              style="width: 80px"
+            ></ion-skeleton-text
+          ></ion-label>
+        </ion-item>
+        } } @else { @if(!store.offers()?.length) {
+        <ion-item>
+          <ion-label class="color-text">
+            <p>Aucune offre disponible</p>
           </ion-label>
         </ion-item>
-        }
+        } @else { @for(offer of store.offers(); track $index) {
+        <ion-item>
+          <ion-label class="color-text">
+            <div>
+              <p>{{ offer.shops.name }}</p>
+              <ion-badge color="light">{{ offer.distance | meters }}</ion-badge>
+            </div>
+            <p class="offer">{{ offer.description }}</p>
+            <p class="date">du {{formatDateToFrench(offer.startDate)}} au {{formatDateToFrench(offer.endDate)}}</p>
+          </ion-label>
+        </ion-item>
+        } } }
       </ion-list>
     </ion-card-content>
   </ion-card>

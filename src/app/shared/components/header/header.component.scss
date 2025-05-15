@@ -2,13 +2,14 @@ $header-height: 8vh;
 
 ion-header {
     width: 100%;
+    padding-top: 2em;
     height: $header-height;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--ion-color-primary);
     color: white;
-    
+
     ion-button {
         color: white;
     }

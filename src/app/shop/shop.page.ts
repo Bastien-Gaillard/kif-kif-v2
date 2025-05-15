@@ -5,7 +5,9 @@ import { ActualityListComponent } from './components/actuality-list/actuality-li
 import { ShopListComponent } from './components/shop-list/shop-list.component';
 import { FilterModalComponent } from '../shared/components/filter-modal/filter-modal.component';
 import { Filter } from '../shared/models/filter.model';
-import { ShopsStore } from './stors/shops.store';
+import { ShopsStore } from './stores/shops.store';
+import { filterOutline, newspaperOutline } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
 
 @Component({
     selector: 'app-shop',
@@ -20,8 +22,13 @@ import { ShopsStore } from './stors/shops.store';
     standalone: true,
 })
 export class ShopPage {
-  private shopsStore = inject(ShopsStore);
-  constructor(private modalController: ModalController) {}
+  public store = inject(ShopsStore);
+  constructor(private modalController: ModalController) {
+     addIcons({
+          'filter-outline': filterOutline,
+          'newspaper-outline': newspaperOutline,
+        });
+  }
 
   titlePage: string = 'Commerces et actualités';
   icon: null = null;
@@ -61,20 +68,25 @@ export class ShopPage {
       placeholder: 'Sélectionnez un type de promotion',
     },
   ];
-
-  ngOnInit() {
-    console.log(this.shopsStore.shops())
+  ngOnInit(): void {
   }
   onSegmentChange(event: any): void {
     this.selectedSegment = event.detail.value;
+  }
+
+  handleDistanceChange(event: CustomEvent) {
+    // const distance = event.detail.value;
+    // this.store.getOffers(distance);
+    // console.log('Distance changed:', distance, this.store.offers());
+    console.log('distance')
   }
 
   async openFilterModal() {
     const modal = await this.modalController.create({
       component: FilterModalComponent,
       componentProps: {
-        filterConfig: this.filterConfig, // Passez la configuration des filtres au modal
-        filterData: this.filterData, // Passez les données au modal
+        filterConfig: this.filterConfig,
+        filterData: this.filterData,
       },
       cssClass: 'filter-modal',
       backdropDismiss: true,

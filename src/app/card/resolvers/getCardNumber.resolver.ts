@@ -3,7 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { catchError, from, Observable } from 'rxjs';
 import { QueryService } from '../services/query.service';
 import { Points } from '../models/points.model';
-import { cardStore } from '../cards.shop';
+import { cardStore } from '../cards.store';
 
 @Injectable({
   providedIn: 'root',

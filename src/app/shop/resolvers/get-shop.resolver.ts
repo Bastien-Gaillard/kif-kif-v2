@@ -4,13 +4,15 @@ import { Observable } from 'rxjs';
 import { Shops } from '../models/shops.model';
 import { QueryService } from '../services/query.service';
 import { HttpResponse } from '@angular/common/http';
+import { ShopsStore } from '../stores/shops.store';
 
 
 @Injectable()
 export class GetShopResolver {
+  private store = inject(ShopsStore);
 
   constructor(private query: QueryService) {}
   resolve: ResolveFn<void> = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): void => {
-    this.query.getAllShops()
+    return this.store.getAllShops()
   };
 }

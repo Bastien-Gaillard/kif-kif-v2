@@ -1,9 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { cardStore } from '../../cards.shop';
+import { cardStore } from '../../cards.store';
 import { FilterModalComponent } from '../../../shared/components/filter-modal/filter-modal.component';
 import { Filter } from 'src/app/shared/models/filter.model';
+import { addIcons } from 'ionicons';
+import { timeOutline, filterOutline } from 'ionicons/icons';
+import { Platform } from '@ionic/angular/standalone';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-history',
@@ -13,7 +17,17 @@ import { Filter } from 'src/app/shared/models/filter.model';
   standalone: true,
 })
 export class HistoryComponent implements OnInit {
-  constructor(private modalController: ModalController) {}
+  constructor(private modalController: ModalController, private platform: Platform,  private location: Location) {
+    addIcons({
+      'time-outline': timeOutline,
+      'filter-outline': filterOutline,
+    });
+
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.location.back();
+    });
+
+  }
   public store = inject(cardStore);
   historyPoints$ = this.store.historyPoints();
   titlePage: string = 'Mon historique';
@@ -24,10 +38,7 @@ export class HistoryComponent implements OnInit {
     gains: null,
     points: [0, 1000],
   };
-
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   formatDateToFrench(dateString: string): string {
     const date = new Date(dateString);

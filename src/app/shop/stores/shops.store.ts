@@ -21,18 +21,21 @@ export const ShopsStore = signalStore(
 
   withMethods((store: any, queryService = inject(QueryService)) => {
     function getAllShops() {
+      patchState(store, { loading: true });
       queryService.getAllShops().subscribe({
         next: (res) => {
-          if (res.body !== null) {
-            patchState(store, { shops: res.body as any });
-
+          if (Array.isArray(res) && res.length > 0 && res[0] !== "error") {
+            console.log('Valid response:', res);
+            patchState(store, { shops: res });
             patchState(store, { loading: false });
           } else {
-            throw new Error('No data found');
+            console.error('Invalid response:', res);
+            patchState(store, { loading: false });
           }
         },
         error: (err) => {
-          console.log(err);
+          console.error('Error in getAllShops:', err);
+          patchState(store, { loading: false });
         },
       });
     }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Payment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Sélectionner l'offre à appliquer</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Choisir l'offre</ion-label>
+        <ion-select
+          [(ngModel)]="selectedOffers"
+          (ionChange)="updateOffer()"
+          multiple="x"
+          cancelText="Annuler"
+          okText="Valider"
+        >
+          @for(offer of this.store.shop().offers; track $index) {
+          <ion-select-option [value]="offer.label"
+            >{{offer.label}}</ion-select-option
+          >
+
+          }
+        </ion-select>
+      </ion-item>
+
+      <ion-button expand="full" color="primary" (click)="submitPayment()"
+        >Valider le paiement</ion-button
+      >
+    </ion-card-content>
+  </ion-card>
+</ion-content>
