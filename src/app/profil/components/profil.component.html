@@ -1,8 +1,4 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Mon profil</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [title]="titlePage" [icon]="icon"></app-header>
 
 <ion-content class="ion-padding">
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
@@ -34,17 +30,13 @@
     </ion-item>
 
     @if(isEditing) {
-    <ion-button expand="full" type="submit">
+    <ion-button expand="full" color="primary" type="submit">
       Enregistrer les modifications
     </ion-button>
     }
   </form>
 
-  <ion-button expand="block" color="primary" (click)="toggleEdit()">
+  <ion-button expand="block" color="secondary" (click)="toggleEdit()">
     {{ isEditing ? "Annuler" : "Modifier mes informations" }}
-  </ion-button>
-
-  <ion-button expand="full" color="danger" (click)="logout()">
-    Se déconnecter
   </ion-button>
 </ion-content>

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IonicModule, NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { chevronBackOutline, timeOutline,  } from "ionicons/icons";
+import { chevronBackOutline, logOut, logOutOutline, timeOutline, } from "ionicons/icons";
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -10,17 +10,24 @@ import { chevronBackOutline, timeOutline,  } from "ionicons/icons";
   standalone: true,
 })
 export class HeaderComponent implements OnInit {
-  constructor(private navCtrl: NavController) {}
+  constructor(private navCtrl: NavController) { }
 
   @Input() title: string = 'Mon Titre';
   @Input() icon: string | null = 'Mon icone';
   ngOnInit() {
     addIcons({
       'chevron-back-outline': chevronBackOutline,
+      'log-out-outline': logOutOutline,
     });
   }
 
   goBack() {
-    this.navCtrl.back();
+    if (this.icon === 'log-out-outline') {
+      localStorage.removeItem ('authToken');
+      this.navCtrl.navigateRoot('/');
+
+    } else {
+      this.navCtrl.back();
+    }
   }
 }

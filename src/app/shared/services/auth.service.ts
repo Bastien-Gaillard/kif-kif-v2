@@ -47,6 +47,11 @@ export class AuthService {
     return user?.idUser ?? 0;
   }
 
+  getUserRoleId(): number {
+    const user = this.getUserFromToken();
+    return user?.idRole ?? 0;
+  }
+
   // Supprimer le token
   logout() {
     localStorage.removeItem(this.tokenKey);

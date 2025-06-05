@@ -11,7 +11,6 @@ export class GetShopNearUserResolver implements Resolve<any> {
 
   private store = inject(sharedStore);
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log('GetShopNearUserResolver');
     return this.store.getShopNearUser();
   }
 }

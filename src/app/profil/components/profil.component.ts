@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NFC, Ndef } from '@awesome-cordova-plugins/nfc/ngx';
-import { IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import {
   IonLabel,
   IonCard,
@@ -18,6 +18,8 @@ import {
 } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { profilStore } from '../profil.store';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { QueryService } from '../services/query.service';
 
 @Component({
   standalone: true,
@@ -25,19 +27,23 @@ import { profilStore } from '../profil.store';
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss'],
   providers: [NFC, Ndef],
-  imports: [IonicModule, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [IonicModule, FormsModule, ReactiveFormsModule, CommonModule, HeaderComponent],
 })
 export class ProfilComponent implements OnInit {
   userForm!: FormGroup;
   isEditing = false;
   store = inject(profilStore);
+  titlePage: string = 'Profil';
+  icon: string = 'log-out-outline';
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router
-  ) {}
+    private router: Router,
+    private queryService: QueryService,
+    private alertController: AlertController,
+  ) { }
 
-   updateFormEffect = effect(() => {
+  updateFormEffect = effect(() => {
     const user = this.store.users();
     if (user && Object.keys(user).length > 0 && this.userForm) {
       this.userForm.patchValue({
@@ -50,7 +56,7 @@ export class ProfilComponent implements OnInit {
   });
 
   ngOnInit() {
-      this.userForm = this.fb.group({
+    this.userForm = this.fb.group({
       lastname: ['', Validators.required],
       firstname: ['', Validators.required],
       email: [{ value: '', disabled: true }],
@@ -61,15 +67,29 @@ export class ProfilComponent implements OnInit {
   toggleEdit() {
     this.isEditing = !this.isEditing;
     if (!this.isEditing) {
-      this.ngOnInit(); // reset the form if cancel
+      window.location.reload();
     }
   }
 
   onSubmit() {
     if (this.userForm.valid) {
-      // Appelle ici ton service pour envoyer la modification (à implémenter)
-      console.log('Nouvelle valeur', this.userForm.value);
+      this.queryService.updateUserInformation(this.authService.getUserId(), this.userForm.value)
+  .subscribe({
+    next: (response) => {
+      console.log('Mise à jour réussie', response);
       this.isEditing = false;
+    },
+    error: async (error) => {
+      const alert = await this.alertController.create({
+        header: 'Erreur',
+        message: error.error?.message || 'Une erreur est survenue.',
+        buttons: ['OK']
+      });
+
+      await alert.present();
+    }
+  });
+      
     }
   }
 

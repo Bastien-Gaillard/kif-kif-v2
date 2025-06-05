@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { Points } from './models/points.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { cardStore } from './cards.store';
 import { addIcons } from 'ionicons';
 import { pricetagsOutline, timeOutline, cardOutline } from 'ionicons/icons';
@@ -9,13 +9,15 @@ import { App } from '@capacitor/app';
 import { GeolocationService } from '../services/geolocation.service';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { WalletModalComponent } from '../wallet/components/wallet-modal/wallet-modal.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-card',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: 'card.page.html',
   styleUrls: ['card.page.scss'],
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonicModule, RouterModule, CommonModule, FormsModule],
 })
 export class CardPage {
   titlePage: string = 'Ma carte de fidelité';
@@ -57,7 +59,4 @@ export class CardPage {
     await this.router.navigate(['/wallet']);
   }
 
-  test() {
-    console.log('Bouton cliqué !');
-  }
 }

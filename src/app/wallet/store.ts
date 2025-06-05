@@ -1,7 +1,6 @@
 import { inject } from '@angular/core';
 import { signalStore, withState, withMethods, patchState } from '@ngrx/signals';
 import { QueryService } from './services/query.service';
-import getShopNearUser from '../../../../kifkif-api/src/controllers/shops/getShopNearUser.controller';
 
 type ActionState = {
   shop: any;

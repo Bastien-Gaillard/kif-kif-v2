@@ -90,7 +90,12 @@ export class AuthComponent implements OnInit {
       this.queryService.loginUser(this.authForm.value).subscribe({
         next: (res: any) => {
           localStorage.setItem('authToken', res.body.token);
-          this.router.navigate(['/tabs', 'card']);
+          if(this.authService.getUserId() == 1) {
+            this.router.navigate(['/tabs', 'card']);
+          } else {
+            this.router.navigate(['/admins']);
+
+          }
         },
         error: async (err) => {
           console.error('Erreur lors de la création :', err);
