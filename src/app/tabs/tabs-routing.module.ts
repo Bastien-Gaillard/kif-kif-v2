@@ -5,7 +5,7 @@ import { GetShopNearUserResolver } from '../wallet/resolvers/getShopNearUser.res
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
@@ -17,18 +17,18 @@ const routes: Routes = [
         loadChildren: () => import('../shop/shop.module').then(m => m.ShopPageModule)
       },
       {
+        path: 'profil',
+        loadChildren: () => import('../profil/profil.module').then(m => m.ProfilPageModule)
+      },
+      {
         path: '',
-        redirectTo: '/tabs/card',
+        redirectTo: 'card',
         pathMatch: 'full'
       }
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/card',
-    pathMatch: 'full'
   }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

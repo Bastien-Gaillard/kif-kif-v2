@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <app-header [title]="titlePage" [icon]="icon"></app-header>
-
 <ion-content [fullscreen]="true">
+  <ion-button (click)="test()">Test</ion-button>
+
   <div class="layout-container">
     <div class="fidelity-card">
       <ion-card class="custom-card">
@@ -26,7 +27,7 @@
             expand="block"
             color="primary"
             style="border-radius: 5px; margin-top: 20px"
-            href="/tabs/card/details"
+            [routerLink]="'/tabs/card/details'"
           >
             Voir les détails
           </ion-button>

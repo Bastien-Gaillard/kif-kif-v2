@@ -69,7 +69,11 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "styles": [
+                "src/global.scss",
+                "src/theme/variables.scss"
+              ]
             },
             "development": {
               "optimization": false,

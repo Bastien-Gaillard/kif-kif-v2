@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isLogin ? "Connexion" : "Inscription" }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+    @if(!isLogin) {
+    <ion-item>
+      <ion-label position="floating">Nom</ion-label>
+      <ion-input formControlName="lastname"></ion-input>
+    </ion-item>
+    @if(lastname.invalid && (lastname.dirty || lastname.touched)) {
+    <ion-text color="danger">
+      @if(lastname.errors?.['required']) {
+      <small>Le lastname est requis.</small>
+      }
+    </ion-text>
+    }
+
+    <ion-item>
+      <ion-label position="floating">Prénom</ion-label>
+      <ion-input formControlName="firstname"></ion-input>
+    </ion-item>
+    @if(firstname.invalid && (firstname.dirty || firstname.touched)) {
+    <ion-text color="danger">
+      @if(firstname.errors?.['required']) {
+      <small>Le Prénom est requis.</small>
+      }
+    </ion-text>
+    }
+    <ion-item>
+      <ion-label position="floating">Date de naissance</ion-label>
+      <ion-datetime
+        presentation="date"
+        formControlName="birthday"
+      ></ion-datetime>
+    </ion-item>
+    @if(birthday.invalid && (birthday.dirty || birthday.touched)) {
+    <ion-text color="danger">
+      @if(birthday.errors?.['required']) {
+      <small>La date de naissance est requise.</small>}
+    </ion-text>
+    } }
+
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+    @if(email.invalid && (email.dirty || email.touched)) {
+    <ion-text color="danger">
+      @if(email.errors?.['required']) {
+      <small>L'email est requis.</small>
+      } @if(email.errors?.['email']) {
+      <small>L'email n'est pas valide.</small>
+      }
+    </ion-text>
+    }
+
+    <ion-item>
+      <ion-label position="floating">Mot de passe</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    @if(password.invalid && (password.dirty || password.touched)) {
+    <ion-text color="danger">
+      @if(password.errors?.['required']) {
+      <small>Le mot de passe est requis.</small>}
+      @if(password.errors?.['minlength']) {
+      <small>Minimum 6 caractères.</small>
+      }
+    </ion-text>
+    } @if(!isLogin) {
+    <ion-item lines="none">
+      <ion-checkbox slot="start" formControlName="newsletter"></ion-checkbox>
+      <ion-label>
+        Je <strong>souhaite</strong> ne pas recevoir d’actualités exclusives et
+        d’offres personnalisées.
+      </ion-label>
+    </ion-item>
+    }
+    <ion-button expand="full" type="submit" [disabled]="authForm.invalid">
+      {{ isLogin ? "Se connecter" : "S'inscrire" }}
+    </ion-button>
+  </form>
+
+  <ion-button fill="clear" (click)="toggleAuthMode()">
+    {{
+      isLogin
+        ? "Pas encore inscrit ? Créer un compte"
+        : "Déjà un compte ? Se connecter"
+    }}
+  </ion-button>
+</ion-content>
+
+<ion-alert
+  [isOpen]="isAlertOpen"
+  header="Erreur"
+  [message]="alertMessage"
+  [buttons]="alertButtons"
+  (didDismiss)="setOpen(false)"
+>
+</ion-alert>

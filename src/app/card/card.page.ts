@@ -7,7 +7,7 @@ import { pricetagsOutline, timeOutline, cardOutline } from 'ionicons/icons';
 import { Platform } from '@ionic/angular/standalone';
 import { App } from '@capacitor/app';
 import { GeolocationService } from '../services/geolocation.service';
-import { ModalController } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { WalletModalComponent } from '../wallet/components/wallet-modal/wallet-modal.component';
 @Component({
   selector: 'app-card',
@@ -15,6 +15,7 @@ import { WalletModalComponent } from '../wallet/components/wallet-modal/wallet-m
   templateUrl: 'card.page.html',
   styleUrls: ['card.page.scss'],
   standalone: true,
+  imports: [IonicModule],
 })
 export class CardPage {
   titlePage: string = 'Ma carte de fidelité';
@@ -50,8 +51,13 @@ export class CardPage {
     this.geolocationService.watchPosition();
     console.log('Position actuelle:', this.geolocationService.watchPosition());
   }
+
   async openWallet() {
     console.log('openWallet');
     await this.router.navigate(['/wallet']);
+  }
+
+  test() {
+    console.log('Bouton cliqué !');
   }
 }

@@ -4,6 +4,7 @@ import { QueryService } from './services/query.service';
 import { Points } from './models/points.model';
 import { GeolocationService } from '../services/geolocation.service';
 import { Offers } from './models/offers.model';
+import { AuthService } from '../shared/services/auth.service';
 type ActionState = {
   loadingGlobalPoints: boolean,
   loadingHistoryPoints: boolean,
@@ -41,10 +42,10 @@ export const initialActionState: ActionState = {
 export const cardStore = signalStore(
   { providedIn: 'root' },
   withState(initialActionState),
-  withMethods((store: any, queryService = inject(QueryService), geolocationService = inject(GeolocationService)) => ({
+  withMethods((store: any, queryService = inject(QueryService), geolocationService = inject(GeolocationService), authService = inject(AuthService)) => ({
     getGlobalPoints: () => {
       patchState(store, { loadingGlobalPoints: true });
-      queryService.getGlobalPoints(12).subscribe({
+      queryService.getGlobalPoints(authService.getUserId()).subscribe({
         next: (response) => {
           if (response.data) {
             patchState(store, { globalPoints: response.data });
@@ -63,7 +64,7 @@ export const cardStore = signalStore(
     },
     getHistoryPoints: () => {
       patchState(store, { loading: true });
-      queryService.getHistoryPoints(12).subscribe({
+      queryService.getHistoryPoints(authService.getUserId()).subscribe({
         next: (response) => {
           if (response.data) {
             patchState(store, { historyPoints: response.data });
@@ -113,7 +114,7 @@ export const cardStore = signalStore(
 
     getCurrentPoints: () => {
       patchState(store, { loadingCurrentPoints: true });
-      queryService.getCurrentPoints(12).subscribe({
+      queryService.getCurrentPoints(authService.getUserId()).subscribe({
         next: (response) => {
           if (response.data) {
 
@@ -133,7 +134,7 @@ export const cardStore = signalStore(
     },
     getCardNumber: () => {
       patchState(store, { loading: true });
-      queryService.getCardNumber(12).subscribe({
+      queryService.getCardNumber(authService.getUserId()).subscribe({
         next: (response) => {
           console.log(response.data);
           if (response.data) {

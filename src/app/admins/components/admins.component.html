@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Admins - Réception d'argent</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Montant à recevoir</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Montant attendu</ion-label>
+        <ion-input type="number" [(ngModel)]="expectedAmount"></ion-input>
+      </ion-item>
+
+      <ion-button expand="full" color="secondary" (click)="startListening()">
+        Démarrer la réception NFC
+      </ion-button>
+      @if(receivedAmount !== null) {
+      <ion-card>
+        <ion-card-content>
+          <p>Montant reçu : {{ receivedAmount }} €</p>
+          @if(transactionStatus) {
+          <p>{{ transactionStatus }}</p>
+          }
+        </ion-card-content>
+      </ion-card>
+      }
+    </ion-card-content>
+  </ion-card>
+</ion-content>

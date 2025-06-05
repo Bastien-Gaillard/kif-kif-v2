@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { GeolocationService } from './services/geolocation.service';
 import { Platform } from '@ionic/angular';
-
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -16,7 +15,6 @@ export class AppComponent {
     private platform: Platform
   ) {
     this.platform.ready().then(() => {
-
       this.loadPosition();
       this.startWatching();
     });
@@ -35,6 +33,26 @@ export class AppComponent {
     }
   }
 
+  async requestLocationPermission() {
+    if (!navigator.permissions) {
+      console.warn("L'API Permissions n'est pas supportée par ce navigateur.");
+      return;
+    }
+    const status = await navigator.permissions.query({ name: 'geolocation' });
+    if (status.state !== 'granted') {
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log('Permission accordée, position obtenue:', position);
+        },
+        (error) => {
+          console.warn('Permission refusée ou erreur:', error);
+        }
+      );
+    } else {
+      console.log('Permission déjà accordée');
+    }
+  }
   savePosition(position: GeolocationPosition) {
     localStorage.setItem('userPosition', JSON.stringify(position));
     console.log('Position sauvegardée dans le local storage.');
