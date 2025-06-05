@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NFC, Ndef } from '@awesome-cordova-plugins/nfc/ngx';
 import { IonicModule } from '@ionic/angular';
 import { IonLabel, IonCard, IonButton, IonHeader } from "@ionic/angular/standalone";
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 
 @Component({
   standalone: true,
@@ -10,15 +11,14 @@ import { IonLabel, IonCard, IonButton, IonHeader } from "@ionic/angular/standalo
   templateUrl: './admins.component.html',
   styleUrls: ['./admins.component.scss'],
   providers: [NFC, Ndef],
-  imports: [IonicModule, FormsModule]
+  imports: [IonicModule, FormsModule, HeaderComponent]
 })
 export class AdminsComponent implements OnInit {
   expectedAmount: number = 0;
   receivedAmount: number | null = null;
   transactionStatus: string = '';
-
+  titlePage: string = 'Gestion du compte';
   constructor(private nfc: NFC, private ndef: Ndef) {}
-
   ngOnInit(): void {}
 
   startListening() {
@@ -46,5 +46,10 @@ export class AdminsComponent implements OnInit {
         alert('Erreur lors de la réception NFC');
       }
     });
+  }
+
+  logout() {
+    localStorage.removeItem('authToken');
+    window.location.href = '/';
   }
 }
