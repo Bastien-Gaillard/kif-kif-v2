@@ -8,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NFC, Ndef } from '@awesome-cordova-plugins/nfc/ngx';
 import { AlertController, IonicModule } from '@ionic/angular';
 import {
   IonLabel,
@@ -26,7 +25,6 @@ import { QueryService } from '../services/query.service';
   selector: 'app-profil',
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss'],
-  providers: [NFC, Ndef],
   imports: [IonicModule, FormsModule, ReactiveFormsModule, CommonModule, HeaderComponent],
 })
 export class ProfilComponent implements OnInit {
@@ -89,7 +87,7 @@ export class ProfilComponent implements OnInit {
       await alert.present();
     }
   });
-      
+
     }
   }
 

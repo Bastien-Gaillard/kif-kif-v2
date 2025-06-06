@@ -1,3 +1,26 @@
-<p>
-  scanner works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Caméra</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-button expand="block" (click)="takePhoto()">
+    Prendre une photo
+  </ion-button>
+  @if(photo) {
+  <ion-img [src]="photo"></ion-img>
+  }
+  <ion-button expand="block" href="/admins/offres">
+    Aller aux Offres
+  </ion-button>
+
+  <ion-button expand="block" href="/admins/magasin">
+    Aller au Magasin
+  </ion-button>
+
+  <ion-button expand="block" href="/admins/scanner">
+    Ouvrir la Caméra / Scan
+  </ion-button>
+  <ion-button expand="block" (click)="logout()"> Deconnexion </ion-button>
+</ion-content>

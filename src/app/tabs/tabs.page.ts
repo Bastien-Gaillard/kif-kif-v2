@@ -32,4 +32,6 @@ export class TabsPage {
       personOutline: personOutline,
     });
   }
+
+
 }

@@ -1,3 +1,74 @@
-<p>
-  offers works!
-</p>
+<app-header title="Offres de la boutique"></app-header>
+<ion-content class="ion-padding" fullscreen>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Offres en cours</ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label class="ion-text-wrap">
+        <h2>-20% sur toute la gamme Électronique</h2>
+        <p>Valable jusqu’au 30 juin 2025</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label class="ion-text-wrap">
+        <h2>1 acheté = 1 offert (catégorie Maison)</h2>
+        <p>Offre valable les samedis uniquement</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label class="ion-text-wrap">
+        <h2>Livraison gratuite à partir de 50€</h2>
+        <p>Offre permanente</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Nouvelle Offre</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form>
+        <ion-item>
+          <ion-label position="stacked">Nom de l'offre</ion-label>
+          <ion-input placeholder="Ex: -10% sur les chaussures"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Description</ion-label>
+          <ion-textarea placeholder="Détails de l'offre..."></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Date de fin</ion-label>
+          <ion-datetime
+            display-format="DD MMM YYYY"
+            placeholder="Sélectionner une date"
+          ></ion-datetime>
+        </ion-item>
+
+        <ion-button expand="block" color="primary">
+          Ajouter l'offre
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" href="/admins/offres">
+    Aller aux Offres
+  </ion-button>
+
+  <ion-button expand="block" href="/admins/magasin">
+    Aller au Magasin
+  </ion-button>
+
+  <ion-button expand="block" href="/admins/scanner">
+    Ouvrir la Caméra / Scan
+  </ion-button>
+  <ion-button expand="block" (click)="logout()"> Deconnexion </ion-button>
+</ion-content>

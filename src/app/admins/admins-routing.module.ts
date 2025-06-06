@@ -1,23 +1,37 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminsComponent } from './components/admins.component';
+import { OffersComponent } from './components/offers/offers.component';
+import { ShopComponent } from './components/shop/shop.component';
+import { ScannerComponent } from './components/scanner/scanner.component';
+import { GetShopResolver } from './components/shop/resolvers/get-shop.resolver';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminsComponent,
-    children: [
-      { path: 'offres', loadChildren: () => import('./components/offers/offers.module').then(m => m.OffersModule) },
-      { path: 'magasin', loadChildren: () => import('./components/shop/shop.module').then(m => m.ShopModule) },
-      { path: 'scanner', loadChildren: () => import('./components/scanner/scanner.module').then(m => m.ScannerModule) },
-      { path: '', redirectTo: 'offres', pathMatch: 'full' }
-    ]
-  }
+    resolve: {
+      shops: GetShopResolver,
+    },
+  },
+  {
+    path: 'offres',
+    component: OffersComponent,
+  },
+  {
+    path: 'magasin',
+    component: ShopComponent,
+    resolve: {
+      shops: GetShopResolver,
+    },
+  },
+  {
+    path: 'scanner',
+    component: ScannerComponent,
+  },
 ];
-
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AdminPageRoutingModule {}

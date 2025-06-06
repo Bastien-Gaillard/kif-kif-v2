@@ -1,13 +1,3 @@
-<app-header [title]="titlePage"></app-header>
-
 <ion-content class="ion-padding">
-  <ion-list class="ion-text-center">
-    <ion-button [routerLink]="offres" >Gérer les offres</ion-button>
-    <ion-button [routerLink]="shop">Gérer le magasin</ion-button>
-    <ion-button [routerLink]="scanner">Scanner un QR Code</ion-button>
-  </ion-list>
-
-      <ion-button style="padding-top: 55vh;" expand="full" color="secondary" (click)="logout()">
-        Se déconnecter
-      </ion-button>
+  <app-shop></app-shop>
 </ion-content>

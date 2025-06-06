@@ -7,7 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GetPointsResolver } from './card/resolvers/getPoints.resolver';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { NFC, Ndef } from '@awesome-cordova-plugins/nfc/ngx';
+import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
@@ -15,8 +16,7 @@ import { NFC, Ndef } from '@awesome-cordova-plugins/nfc/ngx';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     GetPointsResolver,
     provideHttpClient(withInterceptorsFromDi()),
-    NFC,
-    Ndef
+    BarcodeScanner
   ],
   bootstrap: [AppComponent],
 })

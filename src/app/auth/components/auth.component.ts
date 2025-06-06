@@ -36,7 +36,11 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/tabs', 'card']);
+      if (this.authService.getUserRoleId() == 1) {
+        this.router.navigate(['/tabs', 'card']);
+      } else {
+        this.router.navigate(['/admins']);
+      }
       return;
     }
 
@@ -90,11 +94,11 @@ export class AuthComponent implements OnInit {
       this.queryService.loginUser(this.authForm.value).subscribe({
         next: (res: any) => {
           localStorage.setItem('authToken', res.body.token);
-          if(this.authService.getUserId() == 1) {
+          console.log('Token reçu :', this.authService.getUserRoleId());
+          if (this.authService.getUserRoleId() == 1) {
             this.router.navigate(['/tabs', 'card']);
           } else {
-            this.router.navigate(['/admins']);
-
+            this.router.navigate(['/admins/magasin']);
           }
         },
         error: async (err) => {

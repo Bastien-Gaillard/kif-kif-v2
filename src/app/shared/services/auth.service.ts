@@ -49,7 +49,7 @@ export class AuthService {
 
   getUserRoleId(): number {
     const user = this.getUserFromToken();
-    return user?.idRole ?? 0;
+    return user?.role ?? 0;
   }
 
   // Supprimer le token

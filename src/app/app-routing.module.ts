@@ -17,7 +17,8 @@ const routes: Routes = [
   },
   {
     path: 'admins',
-    component: AdminsComponent,
+    loadChildren: () =>
+      import('./admins/admins.module').then((m) => m.AdminPageModule),
   },
   {
     path: 'wallet',

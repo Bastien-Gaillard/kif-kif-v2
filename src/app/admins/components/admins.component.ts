@@ -1,24 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NFC, Ndef } from '@awesome-cordova-plugins/nfc/ngx';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { IonLabel, IonCard, IonButton, IonHeader } from "@ionic/angular/standalone";
+import { addIcons } from 'ionicons';
+import { card, cardOutline, information, informationOutline, logOut, logOutOutline, scanOutline } from 'ionicons/icons';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { ShopPage } from "../../shop/shop.page";
+import { ShopComponent } from './shop/shop.component';
 
 @Component({
   standalone: true,
   selector: 'app-admins',
   templateUrl: './admins.component.html',
   styleUrls: ['./admins.component.scss'],
-  providers: [NFC, Ndef],
-  imports: [IonicModule, FormsModule, HeaderComponent]
+  imports: [IonicModule, FormsModule, HeaderComponent, RouterModule, ShopPage, ShopComponent],
 })
 export class AdminsComponent implements OnInit {
   expectedAmount: number = 0;
   receivedAmount: number | null = null;
   transactionStatus: string = '';
   titlePage: string = 'Gestion du compte';
-  constructor(private nfc: NFC, private ndef: Ndef) {}
+  constructor() {
+    addIcons({
+      'log-out-outline': logOutOutline,
+      'scan-outline': scanOutline,
+      'information-outline': informationOutline,
+      'card-outline': cardOutline,
+    });
+  }
   ngOnInit(): void {}
 
   startListening() {
@@ -27,25 +37,6 @@ export class AdminsComponent implements OnInit {
       return;
     }
 
-    this.nfc.addNdefListener().subscribe((event) => {
-      try {
-        const tagContent = event.tag.ndefMessage[0];
-        const message = this.nfc.bytesToString(tagContent.payload).substring(3);
-        const parsed = JSON.parse(message);
-        this.receivedAmount = parsed.amount;
-
-        if (this.receivedAmount === this.expectedAmount) {
-          this.transactionStatus = 'Transaction réussie !';
-          alert(`Montant reçu : ${this.receivedAmount}€ - Transaction validée`);
-        } else {
-          this.transactionStatus = 'Montant incorrect, transaction refusée.';
-          alert(`Montant incorrect : ${this.receivedAmount}€`);
-        }
-      } catch (err) {
-        console.error('Erreur lors de la réception NFC:', err);
-        alert('Erreur lors de la réception NFC');
-      }
-    });
   }
 
   logout() {

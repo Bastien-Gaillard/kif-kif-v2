@@ -1,3 +1,51 @@
-<p>
-  shop works!
-</p>
+<app-header title="Détail de la boutique"></app-header>
+<ion-content class="ion-padding" fullscreen>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Super Boutique</ion-card-title>
+      <ion-card-subtitle>Pertuis (84120)</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Adresse :</strong> 10 rue de la Paix</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Catégories associées</ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Électronique</ion-label>
+      <ion-button fill="clear" color="danger"> Supprimer </ion-button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Maison</ion-label>
+      <ion-button fill="clear" color="danger"> Supprimer </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <ion-label>Ajouter une catégorie</ion-label>
+    <ion-select interface="popover" placeholder="Sélectionner">
+      <ion-select-option value="1">Électronique</ion-select-option>
+      <ion-select-option value="2">Maison</ion-select-option>
+      <ion-select-option value="3" disabled>Déjà liée</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-button expand="block" href="/admins/offres">
+    Aller aux Offres
+  </ion-button>
+
+  <ion-button expand="block" href="/admins/magasin">
+    Aller au Magasin
+  </ion-button>
+
+  <ion-button expand="block" href="/admins/scanner">
+    Ouvrir la Caméra / Scan
+  </ion-button>
+
+  <ion-button expand="block" (click)="logout()"> Deconnexion </ion-button>
+</ion-content>
